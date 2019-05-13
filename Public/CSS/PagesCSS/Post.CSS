@@ -1,0 +1,71 @@
+.info p, .Post, .info div p, .Comments{
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #454545;
+}
+.Post, .Comments_Div{
+	text-align: left;
+}
+.Comments a, .WriteComment a, .Comments div div{
+	display: inline-block;
+}
+.User_info, .info, .Someinfo div, .WriteComment a input[type = 'image'],
+.Comments input, .Comment_Text{
+	padding: 0px;
+}
+.WriteComment a, .Comments input, .WriteComment input[type = 'image']{
+	vertical-align: bottom;
+}
+.WriteComment a input[type = 'image'], .Comments input, .Comment_Text{
+	margin: 0px;
+}
+.Someinfo div, .Discreption, .Comments{
+	font-size: 15px;
+}
+.Post div input{
+	width: 10%;
+}
+.User_info, .info{
+	margin: 50px;
+}
+.info div{
+	margin: 20px;
+}
+.Discreption{
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.Someinfo div{
+	margin-left: 20px;
+}
+.Someinfo div p{
+	border: none !important;
+}
+.Pictures{
+	text-align: center;
+}
+.Pictures img{
+	width: 200px;
+	height: 200px;
+}
+.WriteComment{
+	height: 100px;
+	border-width: 1px;
+	border-color: #454545;
+	border-style: solid;
+	border-radius: 5px;
+}
+.WriteComment input[type = 'image'], .Comments input{
+	width: 80px;
+	height: 80px;
+}
+.WriteComment textarea{
+	width: 740px;
+}
+.Comment_Text{
+	margin-left: 80px;
+}
+.Post span{
+	margin-left: 20px;
+}

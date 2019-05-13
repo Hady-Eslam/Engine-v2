@@ -1,0 +1,22 @@
+<div class="Title">
+	Change Profile Picture
+</div>
+
+<div class="Div2" id="ProfilePicture">
+	<div class="Div3">
+	    
+	    <input type="image" src="<< OnLineUser >>" width="100"
+	    	height="100" alt="AddPicture" id='image1'onclick="GetPicture('#File1');"
+	        name = 'image1'>
+
+	    <input type="file" id='File1'onchange="Read(this, '#image1');" name='File1'>
+
+	    <p>Change Profile Picture</p>
+
+	</div>
+
+    <div class="Button_Div">
+        <input type="submit" class="Button" value="Change Picture"
+            name = 'PictureSubmit' id="PictureSubmit">
+    </div>
+</div>

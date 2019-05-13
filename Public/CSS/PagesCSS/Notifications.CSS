@@ -1,0 +1,19 @@
+section {
+	min-height: 51.9%;
+}
+.Notifications div{
+	text-align: left;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+    border-bottom-color: #454545;
+}
+
+.Notifications div div{
+	padding: 5px;
+	margin: 0px;
+	border: none !important;
+}
+
+.Notifications a{
+	display: inline-block;
+}

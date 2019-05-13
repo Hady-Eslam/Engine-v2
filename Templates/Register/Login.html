@@ -1,0 +1,73 @@
+<!DOCTYPE >
+<html>
+<head>
+	<title>Log in</title>
+
+    <link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+    <script src="<< CheckLenScript >>"></script>
+    <script src="<< CheckPatternScript >>"></script>
+
+    <script src="<< PagesScripts >>LoginScript.js"></script>
+</head>
+
+<body>
+
+    << include : Header/Header.html >>
+
+	<section>
+
+        <div class ='Title'>
+            Log in
+        </div>
+
+		<form id='LogForm' method="post" enctype="multipart/form-data"
+                action="<< Login >>">
+			<div>
+				<input type="text" id='Email' required name="Email"
+                    placeholder="Enter Your Email" value="<< Email >>">
+			</div>
+			
+            <div>
+				<input id='Password' type="Password" name="Password" required
+                            placeholder="Enter Password">
+			</div>
+
+            <div>
+                <a href="<< ForgetPassword >>">Forget Your Password?</a>
+            </div>
+
+            <div>
+                <input type="submit" value="Log in">
+            </div>
+
+			<div>
+				<a href="<< SignUP >>">Create New Acount</a>
+			</div>
+		</form>
+
+	</section>
+
+    << include : Footer.html >>
+
+
+    <script type="text/javascript">
+
+    << Load : Register/Login_Result >>
+
+    << Filter : Login_Result : Result >>
+
+    </script>
+
+    <script type="text/javascript">
+        var Email_Len = << Email_Len >>;
+        var Password_Len = << Password_Len >>;
+    </script>
+
+</body>
+</html>

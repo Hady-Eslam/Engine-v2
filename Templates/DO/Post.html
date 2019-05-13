@@ -1,0 +1,124 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title><< Title >></title>
+	
+	<link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>Post.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+    <script src="<< CheckLenScript >>"></script>
+    <script src="<< CheckinputLenScript >>"></script>
+
+    <script src="<< SetError_FunctionScript >>"></script>
+    <script src="<< TriggerMessageScript >>"></script>
+
+    <script src="<< AddPictureScript >>"></script>
+    <script src="<< TriggerFormScript >>"></script>
+
+    <script src="<< PagesScripts >>PostScript.js"></script>
+
+</head>
+<body>
+
+    << include : Header/Header.html >>
+
+	<section>
+
+        << include : MessageBox.html >>
+
+        <div class="Post">
+
+            <div style="vertical-align: top;padding: 0px;margin: 0px;display: inline-block;
+                    padding-left: 5%;width: 65%">
+
+                <div style="font-size: 15px;">
+                    <p style="padding: 0px;margin: 0px;"><< Title >></p>
+                    <p><< SmallType >> For 
+                        << BigType >></p>
+                    <p><< Date >></p>
+                    <p><< POST_ID >></p>
+                </div>
+
+                << Load : DO/Post >>
+                << Filter : GetFirstPicture : Data >>
+
+                <div style="border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #454545;">
+                    <div>
+                        <span>Rooms : << Rooms >></span>
+                        <span>PathRooms : << PathRooms >></span>
+                    </div>
+
+                    <div>
+                        <span>Area : << Area >></span>
+                        <span>Furnished : << Furnished >></span>
+                    </div>
+
+                    <div>
+                        <p><< Discreption >></p>
+                    </div>
+                </div>
+
+                << Load : DO/Post >>
+                << Filter : GetAllPictures : Data >>
+
+            </div>
+
+            <div style="display: inline-block; width: 25%;">
+                <div style="background-color: green;border-color: green;border-style: solid;border-width: 1px;border-radius: 5px;height: 30px;">
+                    <p style="margin: 0px;"><< Money >> $</p>
+                </div>
+
+                << Load : DO/Post >>
+                << Filter : CheckContactInfo : Contact_Status >>
+
+                <div style="<< Filter : GetStatusColor : Status >>
+                        border-style: solid;border-width: 1px;border-radius: 5px;height: 30px;">
+                    <p style="margin: 0px;"><< Filter : GetStatusText : Status >></p>
+                </div>
+
+        << Filter : GetAdminSettings : Status >>
+
+                <div>
+                    
+                    <div class="User_info">
+                        <a href="<< User_Profile >>">
+                            
+                            <img src="<< User_Picture >>" style="width: 80px;height: 80px;
+                                border-radius: 50%;display: inline-block;">
+
+                            <div style="display: inline-block;">
+                                <p><< User_Name >></p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        << Filter : GetMessage : Contact_Status >>
+
+        <div style="text-align: left;">
+            <p>Advertisement For This User</p>
+            << Filter : GetUserPosts : User_Email - User_Profile - User_Picture - User_Name >>
+        </div>
+
+	</section>
+
+    << include : Footer.html >>
+
+    <script type="text/javascript">
+        var MakeMessagePage = '<< MakeMessage >>';
+        var Message_Len = << Message_Len >>;
+        var Email_Len = << Email_Len >>;
+    </script>
+
+</body>
+</html>

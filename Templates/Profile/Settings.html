@@ -1,0 +1,65 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title><< Title >></title>
+	
+    <link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>Settings.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+    <script src="<< TriggerMessageScript >>"></script>
+    <script src="<< SetError_FunctionScript >>"></script>
+    
+    <script src="<< TriggerFormScript >>"></script>
+
+    << Load : Profile/Settings >>
+    << Filter : GetScripts >>
+
+</head>
+<body>
+
+    << include : Header/Header.html >>
+    << include : MessageBox.html >>
+
+    <section>
+
+
+        <div class="DivLeft" >
+            
+            <a href="<< Settings >>">Change Profile Picture</a>
+            <a href="<< Settings_Name >>">Change Name</a>
+            <a href="<< Settings_Address >>">Change Address</a>
+            <a href="<< Settings_Password >>">Change Password</a>
+            <a href="<< Settings_Phone >>">Change Phone</a>
+            <a href="<< Settings_DeActivate >>">De Activate Account</a>
+
+        </div>
+
+        <div class="Div1">
+            << Filter : GetTemplate >>
+        </div>
+
+    </section>
+
+    << include : Footer.html >>
+
+    <script type="text/javascript">
+        << Filter : ShowResults >>
+    </script>
+
+    <script type="text/javascript">
+        var Name_Len = << Name_Len >>;
+        var Phone_Len = << Phone_Len >>;
+        var Password_Len = << Password_Len >>;
+        var Address_Len = << Address_Len >>;
+
+        var CheckPage = '<< CheckPage >>';
+        var MyPage = '<< Settings >>';
+    </script>
+
+</body>
+</html>

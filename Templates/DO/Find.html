@@ -1,0 +1,151 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Find</title>
+	
+	<link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>Find.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+    <script src="<< CheckLenScript >>"></script>
+    <script src="<< CheckMinMaxScript >>"></script>
+
+    <script src="<< isNumberScript >>"></script>
+    <script src="<< CheckinputLenAndNumberScript >>"></script>
+
+    <script src="<< CheckDataLenAndNumberScript >>"></script>
+
+    <script src="<< TriggerFormScript >>"></script>
+	<script src="<< PagesScripts >>FindScript.js"></script>
+
+</head>
+<body>
+
+    << include : Header/Header.html >>
+
+	<section>
+
+        <div class="Search_Bar" id="Search_Bar" style="display: inline-block;text-align: left;
+            width: 15%;margin: 0px;padding: 0px;vertical-align: top;">
+
+         <!-- Views -->
+            <div style="display: block;width: 100%;">
+                <p>Views</p>
+
+                << Load : DO/Find >>
+                << Filter : GetViews >>
+            </div>
+
+         <!-- Status -->
+        	<div style="display: block;width: 100%;">
+        		<p>Status</p>
+
+                << Filter : GetStatus >>
+        	</div>
+
+        <!-- Type -->
+        	<div style="display: block;width: 100%;">
+        		<p>Type</p>
+
+        		<input type="checkbox" name="TypeStudents" id="Students"
+                        << Filter : GetStudents >>>
+        		<label for="Students">Students</label>
+                <br>
+        		<input type="checkbox" name="TypeFamilies" id="Families"
+                        << Filter : GetFamilies >>>
+        		<label for="Families">Families</label>
+                <br>
+        		<input type="checkbox" name="TypeOffices" id="Offices"
+                        << Filter : GetOffices >>>
+        		<label for="Offices">Offices</label>
+        	</div>
+
+    <!-- Furnished -->
+        	<div style="display: block;width: 100%;">
+        		<p>Furnished</p>
+
+        		<input type="checkbox" name="FurnishedYes" << Filter : GetFurnishedYes >>>Yes
+                <br>
+        		<input type="checkbox" name="FurnishedNo" << Filter : GetFurnishedNo >>>No
+        	</div>
+
+    <!-- Area -->
+        	<div style="display: block;width: 100%;">
+        		<p>Area</p>
+
+        		<input type="text" name="MinA" required id='MinArea' placeholder="Min"
+        			oninput="CheckinputLenAndNumber(this.id, Area_Len);"
+                    value="<< Filter : GetMinArea >>">
+                <br>
+                <input type="text" name="MaxA" required id='MaxArea' placeholder="Max"
+        			oninput="CheckinputLenAndNumber(this.id, Area_Len);"
+                    value="<< Filter : GetMaxArea >>">
+        	</div>
+
+
+    <!-- Rooms -->
+        	<div style="display: block;width: 100%;">
+        		<p>Rooms</p>
+
+        		<input type="text" name="MinR" required id='MinRooms' placeholder="Min"
+        			oninput="CheckinputLenAndNumber(this.id, Rooms_Len);"
+                    value="<< Filter : GetMinRooms >>">
+                <br>
+   
+                <input type="text" name="MaxR" required id='MaxRooms' placeholder="Max"
+        			oninput="CheckinputLenAndNumber(this.id, Rooms_Len);"
+                    value="<< Filter : GetMaxRooms >>">
+        	</div>
+
+    <!-- PathRooms -->
+        	<div style="display: block;width: 100%;">
+        		<p>PathRooms</p>
+
+        		<input type="text" required id='MinPathRooms' placeholder="Min"
+        			name="MinPR" oninput="CheckinputLenAndNumber(this.id, Rooms_Len);"
+                    value="<< Filter : GetMaxPathRooms >>">
+                <br>
+                <input type="text" id='MaxPathRooms' required placeholder="Max"
+        			name="MaxPR" oninput="CheckinputLenAndNumber(this.id, Rooms_Len);"
+                    value="<< Filter : GetMaxPathRooms >>">
+        	</div>
+
+    <!-- Money -->
+        	<div style="display: block;width: 100%;">
+        		<p>Money</p>
+
+        		<input type="text" name="MinM" required id='MinMoney' placeholder="Min"
+        			oninput="CheckinputLenAndNumber(this.id, Money_Len);"
+                    value="<< Filter : GetMinMoney >>">
+                <br>
+                <input type="text" name="MaxM" required id='MaxMoney' placeholder="Max"
+        			oninput="CheckinputLenAndNumber(this.id, Money_Len);"
+                    value="<< Filter : GetMaxMoney >>">
+        	</div>
+
+        	<div class="Button_Div" style="width: 100%;border: none;">
+		        <input type="submit" value="Search" id="Submit" style="width: 100%;">
+        	</div>
+        </div>
+
+<!-- Result Search -->
+        <div class="Result_Bar" style="display: inline-block;width: 65%">
+            << Filter : Get_Posts : Posts >>
+        </div>
+
+	</section>
+
+    << include : Footer.html >>
+
+	<script type="text/javascript">
+		var Area_Len = << Area_Len >>;
+		var Rooms_Len = << Rooms_Len >>;
+		var Storey_Len = << Storey_Len >>;
+		var Money_Len = << Money_Len >>;
+	</script>
+</body>
+</html>

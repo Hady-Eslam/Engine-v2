@@ -1,0 +1,18 @@
+section{
+	text-align: center;
+	font-size: 20px;
+	min-height: 51.9%;
+}
+
+.P1{
+	padding-top: 85px;
+	color: green;
+}
+
+.P2{
+	color: red;
+}
+
+strong {
+	color: black;
+}

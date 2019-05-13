@@ -1,0 +1,9 @@
+section {
+	height: 51.9%;
+}
+
+section p{
+	font-size: 30px;
+	color: red;
+	padding-top: 80px;
+}

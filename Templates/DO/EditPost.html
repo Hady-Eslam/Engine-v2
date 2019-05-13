@@ -1,0 +1,182 @@
+<!DOCTYPE >
+<html>
+<head>
+    <title><< Title >></title>
+    
+    <link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>Advertise.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+    <script src="<< CheckLenScript >>"></script>
+    <script src="<< CheckinputLenScript >>"></script>
+
+    <script src="<< CheckDataLenAndNumberScript >>"></script>
+
+    <script src="<< isNumberScript >>"></script>
+    <script src="<< CheckinputLenAndNumberScript >>"></script>
+
+    <script src="<< AddPictureScript >>"></script>
+
+    <script src="<< TriggerFormScript >>"></script>
+
+    <script src="<< TriggerMessageScript >>"></script>
+
+    <script src="<< PagesScripts >>AdvertiseScript.js"></script>
+</head>
+
+<body>
+
+    << include : Header/Header.html >>
+    
+    <section>
+        
+        <div class = 'Title' >
+            Edit Post
+        </div>
+
+        << include : MessageBox.html >>
+        
+        <div id='AdvertiseDiv' class="Advertise">
+
+    <!-- -->
+            
+		    <div>
+                <span>Advertise Name : *</span>
+                <input type="text" name="AddName" id='AddName' placeholder="Advertise Name"
+                    oninput="CheckinputLen(this.id, Advertise_Name_Len);"
+                    value="<< Title >>">
+            </div>
+
+            <div style="padding-left: 80px;">
+
+                <p>Type : *</p>
+
+                <select name="BigType" id="BigType">
+                    <option>Select</option>
+                    << Load : DO/EditPost >>
+                    << Filter : GetBigType : BigType >>
+                </select>
+
+                <select name="SmallType" id="SmallType">
+                    <option>Select</option>
+                    << Filter : GetSmallType : SmallType >>
+                </select>
+            </div>
+
+            <div>
+                <span>Money : *</span>
+                <input type="text" name="Money" required placeholder="Money" id='Money'
+                    oninput="CheckinputLenAndNumber(this.id, Money_Len);"
+                    value="<< Money >>">
+            </div>
+
+            <div style="padding-left: 80px;">
+                <p>Rooms : *</p>
+                <select name="Rooms" id="Rooms">
+                	<option>Select</option>
+                    << Filter : GetRooms : Rooms >>
+                </select>
+            </div>
+
+            <div style="padding-left: 80px;">
+                <p>PathRooms : *</p>
+                <select name="PathRooms" id="PathRooms">
+                	<option>Select</option>
+                    << Filter : GetPathRooms : PathRooms >>
+                </select>
+            </div>
+
+            <div>
+                <span>Area : *</span>
+                <input type="text" name="Area" required placeholder="Area" id='Area'
+                    oninput="CheckinputLenAndNumber(this.id, Area_Len);"
+                    value="<< Area >>">
+            </div>
+
+            <div style="padding-left: 80px;">
+                <p>Furnished : </p>
+                <select name="Furnished">
+                	<option>Select</option>
+                    << Filter : GetFurnished : Furnished >>
+                </select>
+            </div>
+
+            <div>
+                *
+                <textarea cols="200" rows="7" id="Discreption" name="Discreption"
+                    placeholder="Enter Your Discreption Here"
+                    oninput="CheckinputLen(this.id, Discreption_Len);"
+                    ><< Discreption >></textarea>
+            </div>
+
+            <div style="border-bottom-color: #454545;border-bottom-style: solid;border-bottom-width: 1px;">
+
+                <input type="image" src="<< Picture1 >>" width="80"
+                    height="80" alt="Picture 1" id='image1' name = 'image1'>
+
+                <input type="image" src="<< Picture2 >>" width="80"
+                    height="80" alt="Picture 2" id='image2' name = 'image2'>
+
+                <input type="image" src="<< Picture3 >>" width="80"
+                    height="80" alt="Picture 3" id='image3' name = 'image3'>
+
+                <input type="image" src="<< Picture4 >>" width="80"
+                    height="80" alt="Picture 4" id='image4' name = 'image4'>
+            </div>
+
+            <div>
+                <span>City : </span>
+                <input type="text" name="City" id='City' placeholder="City"
+                    oninput="CheckinputLen(this.id, Address_Len);"
+                    value="<< Address >>">
+            </div>
+
+            <div>
+                <span>User Name : </span>
+                <input type="text" name="UserName" id='UserName' placeholder="User Name"
+                    oninput="CheckinputLen(this.id, Name_Len);"
+                    value="<< User_Name >>">
+            </div>
+
+            <div>
+                <span>Phone : </span>
+                <input type="text" id='Phone' value="<< Phone >>"
+                    oninput="CheckinputLen(this.id, Phone_Len);" name="Phone">
+            </div>
+
+            <div>
+                Contact Me By << Filter : GetContactMe : ContactMe >>
+            </div>
+
+            <div>
+            	<span><input type="checkbox" id="TermsOfUse"> When You Advertise You Agree in the Terms of Use</span>
+            </div>
+
+    <!--  -->
+            <div>
+                <input type="submit" value="Post" id='Submit'>
+            </div>
+
+        </div>
+
+    </section>
+
+    << include : Footer.html >>
+    
+    <script type="text/javascript">
+        var Advertise_Name_Len = << Advertise_Name_Len >>;
+        var Area_Len = << Area_Len >>;
+        var Discreption_Len = << Discreption_Len >>;
+
+        var Address_Len = << Address_Len >>;
+        var Name_Len = << Name_Len >>;
+        var Money_Len = << Money_Len >>;
+        var Phone_Len = << Phone_Len >>;
+    </script>
+
+</body>
+</html>

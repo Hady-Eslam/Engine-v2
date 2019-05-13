@@ -1,0 +1,39 @@
+.Div3 p, .DivLeft, .Div1{
+	display: inline-block;
+}
+.Div1, .Button_Div{
+	text-align: center;
+}
+.Button_Div input, .Input_Data{
+	width: 100% !important;
+}
+.Div3 div, section, .Div1{
+	margin:0px;
+}
+section, .Div1{
+    padding: 0px;
+}
+section, .DivLeft{
+	text-align: left;
+}
+.Div3 p{
+	font-size: 16px;
+}
+.DivLeft{
+    background-color: #454545;
+    min-height: 100%;
+    height: 100%;
+    padding: 10px;
+    margin: 1 0 1 0px;
+}
+.DivLeft a{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.Div1{
+    margin-left: 200px;
+    min-height: 100%;
+}
+.DivLeft a{
+    color: #C8C3C3;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title><< From >></title>
+	
+	<link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+</head>
+<body>
+
+    << include : Header/Header.html >>
+
+	<section style="min-height: 51.9%;">
+
+		<div style="text-align: left;">
+			<div style="font-size: 15px;border-bottom-color: #454545;border-bottom-style: solid;
+					border-bottom-width: 1px;">
+				<p>From : << From >></p>
+				<p>To : << To >></p>
+				<p>Date : << Message_Date >></p>
+				<p>Advertise Name : << Add_Name >></p>
+			</div>
+
+			<div style="width: 90%;word-wrap: break-word;">
+				<p><< Message_Body >></p>
+			</div>
+		</div>
+
+		<< Load : Profile/Message >>
+		<< Filter : GetPictures >>
+
+    </section>
+
+    << include : Footer.html >>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+/*
+		COMMAN PROPERITIES
+*/
+section, section div, input[type = 'text'], input[type = 'password'], select, footer,
+textarea, .MessageBox{
+	padding: 10px;
+}
+input[type = 'button'], input[type = 'submit'], a, input[type = 'image'],
+input[type = 'checkbox'], input[type = 'radio']{
+	cursor: pointer;
+}
+input[type = 'image']{
+	border-radius: 50%;
+}
+input[type = 'file'], .Profile{
+	display: none;
+}
+header, .Profile, input[type = 'button'], input[type = 'submit'], footer{
+	background-color: #454545;
+}
+.Profile_Item p, .Profile_Name, .MessageBox, .Profile_Name span{
+	color: #FFF;
+}
+input[type = 'text'], input[type = 'password'], select, input[type = 'button'],
+input[type = 'submit'], .MessageBox, textarea, .Profile, .Profile_Item{
+    border-style: solid;
+    border-radius: 5px;
+}
+section div, .Profile_Picture, a{
+    margin: 5px;
+}
+/*
+		HEADER CSS
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+*/
+header , header div, .Profile_NavBar div, .Profile_NavBar div div, body{
+	margin: 0px;
+	padding: 0px;
+}
+header div, .Profile_NavBar div, .Profile_NavBar div div, .Profile_Picture, header a{
+	display: inline-block;
+}
+header, .Profile_Picture, .Profile, .Profile_Item{
+	padding: 5px;
+}
+.Profile_NavBar div, .Profile_NavBar{
+	text-align: right;
+}
+header{
+    font-size: 20px;
+}
+.NavBar{
+	margin-left: 130px;
+}
+.NavBar a input{
+	border-radius: 20%;
+}
+.Profile_NavBar{
+	width: 38%;
+}
+.Profile_NavBar div div{
+	margin-right: 40px;
+}
+.Profile_Picture input{
+	height: 32;
+	width: 32;
+}
+header a{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.Profile_Item, .Profile, input[type = 'button'], input[type = 'submit']{
+	border-color: #454545;
+}
+.Profile{
+	width: 150px;
+	top: 65px;
+	right: 130px;
+	position: absolute;
+}
+.Profile_Item{
+	margin: 3px;
+}
+.Profile_Item:hover{
+	padding-left: 12px;
+}
+.Profile_Name{
+	padding-left: 5px;
+}
+#Notifications{
+	width: 250px;
+	height: 230px;
+	background: #454545;
+	position: absolute;
+	border-radius: 5px;
+	border-color: #454545;
+	right: 190px;
+	top: 65px;
+	text-align: center;
+	display: none;
+}
+#Notifications div{
+	padding: 5px;
+	margin: 0px;
+	color: #FFF;
+	font-size: 15px;
+	text-align: left;
+	border-bottom-width: 1px;
+	border-bottom-color: #C8C3C3;
+	border-bottom-style: solid;
+	width: 90%;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.SeeAll{
+	border: none !important;
+	text-align: center !important;
+}
+/*
+		CENTER CSS
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+*/
+.MessageBox, section, .Title, footer div{
+    text-align: center;
+}
+.MessageBox{
+    visibility: hidden;
+    position: fixed;
+    font-size: 20px !important;
+    z-index: 500;
+}
+body{
+    font-family: sans-serif;
+    background-color: #EDF3E9;
+}
+input[type = 'checkbox'], input[type = 'radio']{
+	width: 20px;
+	height: 20px;
+}
+section{
+    margin: 10px 50px;
+    font-size: 20px;
+}
+.Title{
+	font-size: 30px !important;
+}
+
+input[type = 'text'], input[type = 'password'], select, textarea{
+    font-size: 15px;
+    width: 30%;
+    border-color: #FFF;
+    border-width: 1px;
+    background-color: #c4bfbf;
+	color: #161515;
+}
+input[type = 'text']::placeholder, input[type = 'password']::placeholder,
+textarea::placeholder{
+	color: #6e6d6d;
+}
+a, input[type = 'button'], input[type = 'submit']{
+	color: #C8C3C3;
+}
+input[type = 'button'], input[type = 'submit']{
+	width: 20%;
+    height: 40px;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+a{
+    text-decoration: none;
+    display: block;
+}
+a:hover{
+    color: #52BF01 !important;
+}
+section a, .Title{
+	color: #454545;
+}
+/*	
+		FOOTER CSS
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////
+*/
+footer{
+	display: flex;
+}
+footer div{
+    margin: 20px;
+    padding: 20px;
+}

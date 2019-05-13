@@ -1,0 +1,14 @@
+<header>
+
+	<< include : Header/NavBar.html >>
+	
+	<< Load : Header/Header >>
+
+	<div class="Profile_Picture">
+		<input onclick="ShowProfileMenu();" type="image"
+		src="<< Filter : Show_Picture : ISSET >>">
+
+		<< Filter : include_User_Header : ISSET >>
+	</div>
+	
+</header>

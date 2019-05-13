@@ -1,0 +1,46 @@
+.Result_Bar a, a div, .Navigation_Div a, .Search_Bar div{
+	display: inline-block;
+}
+section p, .Search_Bar, .Search_Bar div{
+	margin: 0px;
+}
+.Result_Bar{
+	border-width: 1px;
+	border-bottom-width: 1px;
+	border-bottom-color: #454545;
+	border-bottom-style: solid;
+}
+section p{
+	color: #454545;
+}
+section {
+	padding: 5px;
+}
+.Search_Bar{
+	text-align: left;
+	padding: 0px;
+}
+.Search_Bar div{
+	padding: 10px;
+	width: 10%;
+	vertical-align: top;
+}
+input[type = 'text'], .Button_Div{
+	width: 100% !important;
+	margin: 3px;
+}
+.Result_Bar, .Button_Div{
+	text-align: center;
+}
+.Result_Bar a div{
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	width: 200px;
+}
+.Result_Bar div input[type = 'image']{
+	border-radius: 0%;
+}
+.Navigation_Div{
+	font-size: 30px;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>My Notifications</title>
+
+	<link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet"type="text/css"href="<< PagesCSS >>Notifications.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+</head>
+
+<body>
+
+    << include : Header/Header.html >>
+
+	<section>
+
+		<div class='Title'> Notifications </div>
+
+        <div class="Notifications">
+            << Load : Profile/Notifications >>
+            << Filter : GetNotifications >>
+        </div>
+
+	</section>
+
+    << include : Footer.html >>
+</body>
+</html>

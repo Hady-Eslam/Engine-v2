@@ -1,0 +1,16 @@
+section div p{
+	color: red;
+}
+
+form{
+	border-radius: 3px;
+}
+
+form div{
+	display: block;
+	text-align: center;
+}
+
+form div div{
+	margin: 0px;
+}

@@ -1,0 +1,39 @@
+section{
+	text-align: left;
+}
+textarea{
+	font-size: 15px;
+	width: 40% !important;
+}
+.Input_Data{
+	width: 16%;
+}
+div.PHA input{
+	width: 13%;
+	margin-left: 20px;
+}
+div#AdvertiseDiv p{
+	display: initial;
+	color: #454545;
+}
+#AdvertiseDiv{
+	padding-left: 50px;
+	
+}
+#AdvertisDiv{
+	font-size: 10px !important;
+}
+
+.Advertise span, .Advertise div input[type='text']{
+	font-size: 15px;
+	size: 20%;
+}
+
+#Link{
+	text-align: center;
+	padding-top: 50px;
+	font-size: 30px;
+}
+#Link input{
+	margin-top: 50px;
+}

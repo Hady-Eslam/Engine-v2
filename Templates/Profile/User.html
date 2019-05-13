@@ -1,0 +1,48 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title><< Title >></title>
+	
+	<link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>User.CSS">
+
+    <link rel="icon" type="image/JPG" href="<< LOGO >>">
+
+    <script src="<< JQueryScript >>"></script>
+    <script src="<< DropBoxScript >>"></script>
+
+
+    <script src="<< TriggerMessageScript >>"></script>
+    <script src="<< SetError_FunctionScript >>"></script>
+
+</head>
+<body>
+
+    << include : Header/Header.html >>
+
+	<section>
+
+        << include : MessageBox.html >>
+
+        <div class="info" style="position: sticky;top: 60px;width: 25%;display: inline-block;
+                    font-size: 15px;">
+
+            <input type="image" src="<< User_Picture >>">
+            <p><span>ID</span> : << User_ID >></p>
+            <p><span>Name</span> : << User_Name >></p>
+            <p><span>Number Of Posts</span> = << Posts_Number >></p>
+            << Load : Profile/User >>
+            << Filter : DeleteAccount >>
+        </div>
+
+        <div class="Posts" style="width: 60%;display: inline-block;">
+            << Filter : GetUserPosts : Posts >>
+        </div>
+
+
+    </section>
+
+    << include : Footer.html >>
+
+</body>
+</html>

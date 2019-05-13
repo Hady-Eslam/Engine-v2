@@ -1,0 +1,31 @@
+.Email div, .First_Row div, .Third_Row div, .CheckBoxs_Div div{
+	display: inline-block;
+}
+.First_Row div, .Third_Row div, .CheckBoxs_Div div{
+	text-align: left;
+}
+.First_Row div input, .Third_Row div input, .Third_Row div select{
+	width: 60%;
+	margin: 5px;
+	margin-left: 0px;
+}
+.Third_Row div, .Email input{
+	width: 30%
+}
+.CheckBoxs_Div div{
+	width: 25%;
+	vertical-align: top;
+}
+#interestedDiv div{
+	margin: 0px;
+}
+#interestedDiv{
+	display: none;
+}
+#Link{
+	padding-top: 100px;
+	padding-bottom: 116px;
+}
+section{
+	text-align: center;
+}
