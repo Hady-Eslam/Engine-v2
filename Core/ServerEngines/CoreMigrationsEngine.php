@@ -22,7 +22,7 @@ class CoreMigrationsEngine{
 		try{
 
 			$SQL = $GLOBALS['PDO']->prepare('CREATE TABLE IF NOT EXISTS `Sessions`(
-				`Session_Key` VARCHAR(300) NOT NULL PRIMARY KEY,
+				`Session_Key` VARCHAR(255) NOT NULL PRIMARY KEY,
 				`Session_Data` TEXT NOT NULL ,
 				`Expire_Date` DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)
 			)ENGINE=InnoDB;');
