@@ -64,6 +64,7 @@ class ViewsEngine{
 
 		if ( function_exists($this->ViewType[1]) ){
 			array_unshift($this->Values, $Request);
+			include_once _DIR_.'/Configs/UserConfigs.php';
 			$Render = call_user_func_array($this->ViewType[1], $this->Values);
 		}
 		else if ( class_exists($this->ViewType[1]) ){
@@ -75,6 +76,7 @@ class ViewsEngine{
 				throw new ViewsExceptionsEngine(
 					'Class View Must Have These Methods ( GET - POST - ALL )');
 
+			include_once _DIR_.'/Configs/UserConfigs.php';
 			if ( $Request->isPOST() && method_exists($ViewClass, 'POST') ){
 				array_unshift($this->Values, $Request);
 				$Render = call_user_func_array(array($ViewClass, 'POST'), $this->Values);

@@ -30,10 +30,9 @@ class CSRFProtectionEngine{
 		if ( $Data['Token'] === NULL || $this->Session_Tokens === NULL )
 			return False;
 
-		else if ( array_key_exists($Data['Token'], $this->Session_Tokens) ){
-			unset($this->Session_Tokens[$Data['Token']]);
+		else if ( array_key_exists($Data['Token'], $this->Session_Tokens) )
+			//unset($this->Session_Tokens[$Data['Token']]);
 			return True;
-		}
 		else
 			return False;
 	}

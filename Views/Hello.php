@@ -7,6 +7,7 @@ use CoreModels\ModelExcutionEngine;
 use Core\TimerEngine;
 use Forms\PostForm;
 use SiteEngines\SiteRenderEngine;
+use Core\RedirectEngine;
 
 function P($Request, $int, $Double){
 
@@ -111,9 +112,11 @@ function P($Request, $int, $Double){
 class Hello{
 	
 	function GET($Request, $int, $Double){
-		
-		//return [$Request, '<p>Hello World</p>'];
-		var_dump($Request->SESSION);
+
+		RedirectEngine::To('http://engine.com/Register/Login');
+		return [$Request, '<p>Hello World</p>'];
+		//var_dump($Request->SESSION);
+
 
 		$Timer = new TimerEngine();
 		$Timer->Start();

@@ -113,4 +113,56 @@ class SessionDataBaseTypeEngine extends SessionEngine{
 			}
 		}
 	}
+
+	static function SaveRedirectSession($Request){
+		
+		if ( $CSRF_TOKEN !== NULL ){
+
+			if ( !isset($Request->SESSION['CSRF']) ){
+				$Request->SESSION['CSRF'] = [
+					$CSRF_TOKEN => True
+				];
+			}
+			else{
+				$CSRF = $Request->SESSION['CSRF'];
+				$CSRF[$CSRF_TOKEN] = True;
+				if ( sizeof($CSRF) > 30 )
+					array_shift($CSRF);
+				$Request->SESSION['CSRF'] = $CSRF;
+			}
+		}
+
+		if ( $Request->SESSION->isEmpty() )
+			setcookie('ENGINE_SESS_ID', '', time()-3600, '/');
+		else{
+			$SQL = $GLOBALS['PDO']->prepare(
+				'UPDATE `Sessions` SET `Session_Data` = ? WHERE `Session_Key` = ?'
+			);
+
+			$SQL->execute(array(
+				self::TO_ENCRYPT(
+					SerializationEngine::Serialize( $Request->SESSION->GetSession() )
+				),
+				$Request->SESSION->GetSessionID()
+			));
+
+			if ( $SQL->rowCount() == 0 ){
+
+				$SQL = $GLOBALS['PDO']->prepare(
+					'INSERT INTO `Sessions`(`Session_Key`, `Session_Data`, `Expire_Date`) VALUES (?, ?, ?)'
+				);
+
+				$SQL->execute(array(
+					$Request->SESSION->GetSessionID(),
+					self::TO_ENCRYPT(
+						SerializationEngine::Serialize( $Request->SESSION->GetSession() )
+					),
+					date('Y-m-d H:i:s',
+						strtotime('+'.$GLOBALS['_Configs_']['_SessionConfigs_']['LIFE_TIME']
+								.' seconds',
+							strtotime(date('Y-m-d H:i:s')))).'.000000'
+				));
+			}
+		}
+	}
 }
