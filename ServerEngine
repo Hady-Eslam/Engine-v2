@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+use Server\CoreServerEngine;
+
+define('START_ENGINE', microtime(true));
+define('_DIR_', __DIR__);
+
+$LazyLoader = include_once _DIR_.'/Core/CoreEngines/LazyLoaderEngine.php';
+$Server = new CoreServerEngine();
+$Server->CheckCommand($argv);
+$Server->ExcuteCommand();
