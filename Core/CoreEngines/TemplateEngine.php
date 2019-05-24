@@ -91,87 +91,119 @@ class TemplateEngine{
 		if ( $this->Status !== 'Render' )
 			return $this->File;
 
-		return preg_replace_callback('/<< (.*) >>|<# (.*) #>/', function ($Text){
-			//var_dump($Text);
-			if ( $Text[0][1] == '#' )
-				return '';
-
-			return $this->Filter_Data($Text[1]);
-		}, $this->File);
+		return $this->Parse_Template_String( $this->File );
 	}
 
-	private function Filter_Data($TextBefore){
-		//var_dump($TextBefore);
-		$Text = explode(':', $TextBefore);
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
 
+	private $INSIDE_IF = False;
+	private $MATCHED_IF = False;
+	private $DO_NOT_STORE = False;
+	private $STORE = '';
 
-		if ( $Text[0] == 'include ' )
-			return $this->include($Text);
+	private function Parse_Template_String($String){
 
-		else if ( $Text[0] == 'Filter ' )
-			return $this->TemplateFilter($Text);
+		$Template = '';
+		foreach (preg_split('/(<< .* >>)|(<# .* #>)/', $String, -1,
+					PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE)
+				as $Value) {
 
-		else if ( $Text[0] == 'Load ')
-			return $this->LoadFilter($Text);
-
-		else if ( !empty( ltrim($TextBefore) ) )
-			return $this->PrintValue($Text[0]);
-		
-		else
-			throw new TemplateExceptionsEngine("UnDefined Template Command");
+			if ( $this->INSIDE_IF )
+				$Template .= $this->Check_IF($Value);
+			else{
+				if ( preg_match('/<# .* #>/', $Value) );	// Comment Section
+				else if ( preg_match('/<< +Load *: *([^ ]*) +>>/', $Value, $Result) )
+					$Template .= $this->LoadFilter($Result[1]);
+				else if ( preg_match('/<< +include *: *([^ ]*) +>>/', $Value, $Result) )
+					$Template .= $this->include($Result[1]);
+				else if ( preg_match('/<< +Filter *: *([^ ]*) +>>/', $Value, $Result) )
+					$Template .= $this->EmptyArgumentedFilter($Result[1]);
+				else if ( preg_match('/<< +Filter *: *([^ ]*) *: *(.*[^ ]) +>>/',
+						$Value, $Result ) )
+					$Template .= $this->ArgumentedFilter($Result);
+				else if ( preg_match('/<< +if +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+						$Value, $Result) )
+					$Template .= $this->IF_Command($Result);
+				else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+						$Value, $Result) )
+					throw new TemplateExceptionsEngine(
+						"Excepeted ( << if Variable Operator Value >> ) Found ( $Value )");
+				else if ( preg_match('/<< +(.*[^ ]) +>>/', $Value, $Result) )
+					$Template .= $this->PrintVariableValue($Result[1]);
+				else
+					$Template .= $Value;
+			}
+		}
+		return $Template;
 	}
 
-	private function PrintValue($Variable){
-		if ( $Variable == 'CSRF' ){
-			$this->CSRF_FOUND = True;
-			return $this->TemplateValues['CSRF'];
-		}
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
 
-		$Var = explode('.', $Variable);
+	private function LoadFilter($Filter_Name){
+		if ( !file_exists(
+			$GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES_FILTERS'].$Filter_Name.'.php' ) )
 
-		if ( sizeof($Var) == 1 ){
-
-			if ( !isset($this->TemplateValues[$Variable]) )
-				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
-			return $this->TemplateValues[$Variable];
-		}
-		else if ( sizeof($Var) == 2 ){
-
-			if ( !isset($this->TemplateValues[$Var[0]][$Var[1]]) )
-				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
-			return $this->TemplateValues[$Var[0]][$Var[1]];
-		}
-		else
-			throw new TemplateExceptionsEngine(
-				"Error in Template Variable ( $Variable ) Syntax ");
-	}
-
-	private function LoadFilter($Text){
-		if ( sizeof($Text) != 2 )
-			throw new TemplateExceptionsEngine(
-				"NOT Valid Template Load Filter Syntax << Load : Filter_Module_Path >>");
-
-		else if ( !file_exists(
-				$GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES_FILTERS'].
-							ltrim($Text[1]).'.php'))
-			throw new TemplateExceptionsEngine(
-				"Filter ( $Text[1] ) Not Found in TemplatesFilters Folder");
+			throw new TemplateExceptionsEngine("Failed To Load Filter ( $Filter_Name )");
 
 		include_once $GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES_FILTERS']
-					.ltrim($Text[1]).'.php';
+							.$Filter_Name.'.php';
 	}
 
-	private function TemplateFilter($Text){
-		if ( sizeof($Text) != 3 )
-			return $this->TemplateFilter_2($Text);
-		
-		$Text[1] = ltrim(rtrim($Text[1]));
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
 
-		$Text[2] = explode('-', $Text[2]);
+	private function include($include_Path){
+		if ( !file_exists(
+			$GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES'].$include_Path.'.html') )
+			throw new TemplateExceptionsEngine(
+				"Template ( $include_Path ) Not Found in Templates Folder");
+
+		return $this->Parse_Template_String(
+					file_get_contents(
+						$GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES'].
+						$include_Path.'.html'));
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	private function EmptyArgumentedFilter($Filter_Name){
+
+		if ( !function_exists($Filter_Name) )
+			throw new TemplateExceptionsEngine("Filter ( $Filter_Name ) Not Found");
+
+		$ReturnValue = call_user_func($Filter_Name);
+		if ( is_object($ReturnValue) || is_array($ReturnValue) )
+			throw new TemplateExceptionsEngine(
+				"Filters Functions ( $Filter_Name ) Must't Return Objects Or Arrays Values");
+
+		return $this->Parse_Template_String( strval($ReturnValue) );
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	private function ArgumentedFilter($Argumented_Filter_Command){
+
+		if ( !function_exists($Argumented_Filter_Command[1]) )
+			throw new TemplateExceptionsEngine(
+				"Filter ( $Argumented_Filter_Command[1] ) Not Found");
+
+		$Filter_Arguments = explode('-', $Argumented_Filter_Command[2]);
+		
 		$Args = [];
-		foreach ($Text[2] as $Value) {
-			$Value = ltrim(rtrim($Value));
-			if ( substr($Value, 0, 1) == '"' && substr($Value, strlen($Value)-1, 1) == '"' )
+		foreach ($Filter_Arguments as $Argument) {
+
+			$Value = ltrim(rtrim($Argument));
+
+			if ( $Value[0] == '"' && $Value[strlen($Value)-1] == '"' )
 				array_push($Args, substr($Value, 1, strlen($Value)-2));
 			else{
 				$Var = explode('.', $Value);
@@ -192,60 +224,198 @@ class TemplateEngine{
 			}
 		}
 
-		$Values = call_user_func_array($Text[1], $Args);
-		if ( is_object($Values) || is_array($Values) )
+		$ReturnValue = call_user_func_array($Argumented_Filter_Command[1], $Args);
+		if ( is_object($ReturnValue) || is_array($ReturnValue) )
 			throw new TemplateExceptionsEngine(
-				"Filters Functions ( $Text[1] ) Must't Return Objects Or Arrays Values");
+				"Filters Functions ( $Filter_Name ) Must't Return Objects Or Arrays Values");
 
-		$Values = strval($Values);
-		return preg_replace_callback('/<< (.*) >>|<# (.*) #>/', function ($Text){
-
-			if ( $Text[0][1] == '#' )
-				return '';
-
-			return $this->Filter_Data($Text[1]);
-		},	$Values );
+		return $this->Parse_Template_String( strval($ReturnValue) );
 	}
 
-	private function TemplateFilter_2($Text){
-		if ( sizeof($Text) != 2 )
-			throw new TemplateExceptionsEngine(
-				"NOT Valid Template Filter Syntax << Filter : Filter_Name : "
-				."FilterArgs , ... >> <br><br> OR << Filter : Filter_Name >> ");
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	private function IF_Command($Tokens){
+
+		$Var = explode('.', $Tokens[1]);
 		
-		$Values = call_user_func(ltrim(rtrim($Text[1])));
-		if ( !is_string($Values) )
+		if ( sizeof($Var) == 1 ){
+
+			if ( !isset($this->TemplateValues[$Var[0]]) )
+				throw new TemplateExceptionsEngine("Variable ( $Tokens[1] ) Not Found");
+			$Value = $this->TemplateValues[$Var[0]];
+		}
+		else if ( sizeof($Var) == 2 ){
+
+			if ( !isset($this->TemplateValues[$Var[0]][$Var[1]]) )
+				throw new TemplateExceptionsEngine("Variable ( $Tokens[1] ) Not Found");
+			$Value = $this->TemplateValues[$Var[0]][$Var[1]];
+		}
+		else
 			throw new TemplateExceptionsEngine(
-				"Filters Functions ($Text[1]) Must Return Only String Values");
+				"Error in Template Variable ( $Tokens[1] ) Syntax");
 
-		return preg_replace_callback('/<< (.*) >>|<# (.*) #>/', function ($Text){
-			
-			if ( $Text[0][1] == '#' )
-				return '';
+		if ( $Tokens[3][0] == '"' && $Tokens[3][strlen($Tokens[3])-1] == '"' )
+			$this->IF_Compare_String($Value, $Tokens[2],
+				substr($Tokens[3], 1, strlen($Tokens[3])-2) );
 
-			return $this->Filter_Data($Text[1]);
-		},	$Values );	
+		else if ( substr($Tokens[3], strlen($Tokens[3])-2) == '()' )
+			$this->IF_Compare_Filter($Value, $Tokens[2],
+				substr($Tokens[3], 0, strlen($Tokens[3])-2) );
 
+		else
+			return $this->IF_Compare_Variable($Value, $Tokens[2], $Tokens[3]);
 	}
 
-	private function include($Text){
-		if ( sizeof($Text) != 2 )
-			throw new Exception(
-				"NOT Valid Template include Syntax << include : Template_Name >>");
+	private function IF_Compare_String($Value, $Operator, $String){
+		if ( $Operator === '==' && $Value != $String ||
+			 $Operator === '>=' && $Value < $String ||
+			 $Operator === '<=' && $Value > $String ||
+			 $Operator === '>' && $Value < $String ||
+			 $Operator === '<' && $Value < $String ){
 
-		else if ( 
-			!file_exists($GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES'].ltrim($Text[1])) )
+			$this->INSIDE_IF = true;
+			$this->MATCHED_IF = false;
+		}
+		else{
+			$this->INSIDE_IF = true;
+			$this->MATCHED_IF = true;
+		}
+	}
+
+	private function IF_Compare_Filter($Value, $Operator, $Filter_Name){
+		if ( !function_exists($Filter_Name) )
+			throw new TemplateExceptionsEngine("Filter ( $Filter_Name ) Not Found");
+
+		$ReturnValue = call_user_func($Filter_Name);
+		$this->IF_Compare_String($Value, $Operator, $ReturnValue);
+	}
+
+	private function IF_Compare_Variable($Value, $Operator, $Variable){
+		$Var = explode('.', $Variable);
+
+		if ( sizeof($Var) == 1 ){
+
+			if ( !isset($this->TemplateValues[$Variable]) )
+				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
+			$Val = $this->TemplateValues[$Variable];
+		}
+		else if ( sizeof($Var) == 2 ){
+
+			if ( !isset($this->TemplateValues[$Var[0]][$Var[1]]) )
+				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
+			$Val = $this->TemplateValues[$Var[0]][$Var[1]];
+		}
+		else
 			throw new TemplateExceptionsEngine(
-					"Template ( $Text[1] ) Not Found in Template Folder");
+				"Error in Template Variable ( $Variable ) Syntax");
 
-		return preg_replace_callback('/<< (.*) >>|<# (.*) #>/', function ($Text){
+		$this->IF_Compare_String($Value, $Operator, $Val);
+	}
 
-			if ( $Text[1][0] == '#' )
-				return '';
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
 
-			return $this->Filter_Data($Text[1]);
-		},	file_get_contents(
-				$GLOBALS['_Configs_']['_AppConfigs_']['TEMPLATES'].ltrim($Text[1]) ) );
+	private function PrintVariableValue($Variable){
+		if ( $Variable == 'CSRF' ){
+			$this->CSRF_FOUND = True;
+			return $this->TemplateValues['CSRF'];
+		}
+
+		$Var = explode('.', $Variable);
+
+		if ( sizeof($Var) == 1 ){
+
+			if ( !isset($this->TemplateValues[$Variable]) )
+				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
+
+			else if ( is_object( $this->TemplateValues[$Variable] ) ||
+						is_array( $this->TemplateValues[$Variable]) )
+				throw new TemplateExceptionsEngine(
+					"Variable ( $Variable ) is Object Or Array So Can't Print The Value Of it");
+
+			return $this->TemplateValues[$Variable];
+		}
+		else if ( sizeof($Var) == 2 ){
+
+			if ( !isset($this->TemplateValues[$Var[0]][$Var[1]]) )
+				throw new TemplateExceptionsEngine("Variable ( $Variable ) Not Found");
+
+			else if ( is_object( $this->TemplateValues[$Var[0]][$Var[1]] ) ||
+						is_array( $this->TemplateValues[$Var[0]][$Var[1]] ) )
+				throw new TemplateExceptionsEngine(
+					"Variable ( $Variable ) is Object Or Array So Can't Print The Value Of it");
+
+			return $this->TemplateValues[$Var[0]][$Var[1]];
+		}
+		else
+			throw new TemplateExceptionsEngine(
+				"Error in Template Variable ( $Variable ) Syntax");
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	private function Check_IF($String){
+
+		if ( !$this->MATCHED_IF ){
+
+			if ( preg_match('/<< +endif +>>/', $String) ){
+				$this->INSIDE_IF = false;
+				$this->MATCHED_IF = false;
+				$this->STORE = '';
+				$this->DO_NOT_STORE = false;
+				return ;
+			}
+			else if ( preg_match('/<< +else +>>/', $String) ){
+				$this->MATCHED_IF = true;
+				return ;
+			}
+			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+					$String, $Result) )
+				return $this->IF_Command($Result);
+		}
+		else
+			return $this->MATCHED_IF($String);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
+
+	private function MATCHED_IF($Value){
+
+		if ( !$this->DO_NOT_STORE ){
+
+			if ( preg_match('/<< +endif +>>/', $Value) ){
+				$this->INSIDE_IF = false;
+				$this->MATCHED_IF = false;
+				$this->DO_NOT_STORE = false;
+				$Template = $this->Parse_Template_String( $this->STORE );
+				$this->STORE = '';
+				return $Template;
+			}
+			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+				$Value) )
+				$this->DO_NOT_STORE = true;
+			else if ( preg_match('/<< +else +>>/', $Value) )
+				$this->DO_NOT_STORE = true;
+			else
+				$this->STORE .= $Value;
+		}
+		else
+			if ( preg_match('/<< +endif +>>/', $Value) ){
+				$this->INSIDE_IF = false;
+				$this->MATCHED_IF = false;
+				$this->DO_NOT_STORE = false;
+				$Template = $this->Parse_Template_String( $this->STORE );
+				$this->STORE = '';
+				return $Template;
+			}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////

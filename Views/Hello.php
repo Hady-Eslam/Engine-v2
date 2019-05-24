@@ -1,6 +1,6 @@
 <?php
 
-use Models\PostModel;
+use Models\Post3Model;
 use WhereOperations\OrEngine as _Or;
 use WhereOperations\AndEngine as _And;
 use CoreModels\ModelExcutionEngine;
@@ -41,7 +41,7 @@ function P($Request, $int, $Double){
 		var_dump($Form->FILTERED_DATA);
 		echo 'Form Not Valid';
 	}
-	
+
 	$Timer->End();
 	$Timer->ShowTime();
 
@@ -68,7 +68,7 @@ function P($Request, $int, $Double){
 		$Result = $ExcutionEngine->GetData();
 		print_r('<br><br>');
 		print_r($Result);
-	
+
 	$Timer->End();
 	$Timer->ShowTime();
 	//print_r($Result);
@@ -110,10 +110,39 @@ function P($Request, $int, $Double){
 }
 
 class Hello{
-	
+
 	function GET($Request, $int, $Double){
 
-		RedirectEngine::To('http://engine.com/Register/Login');
+		$GLOBALS['DataBase'] = new TimerEngine();
+		$GLOBALS['DataBase']->Start();
+
+		$Post = new Post3Model();
+
+		$Statics = $Post->Insert(
+			['Integer' => '5555-10-20', 'Decimal' => '555']);
+
+		$DeleteStatics = $Post->Delete('Decimal=555');
+
+		$UpdateStatics = $Post->Update(['Decimal' => 55])->Limit(5);
+
+		$SelectStatics = $Post->Limit(5);  // OR ->Max() OR ->Min() OR ->Avg()
+										   			 		// OR ->Sum() OR Exists() OR Count()
+
+		/*$Statics = (new Post3Model())->Delete('Decimal < 1  ', '   Decimal>    50  ')
+									 ->OrderBy('-Decimal', 'Integer')
+									 ->Limit(50, 10);*/
+
+		//var_dump($Statics->RowCount());
+		//var_dump($DeleteStatics->RowCount());
+		//var_dump($UpdateStatics->RowCount());
+		//var_dump($SelectStatics->Get());
+		$SelectStatics->Get();
+
+		//$GLOBALS['_Configs_']['_Queries_']->ShowQueries();
+
+		$GLOBALS['DataBase']->End();
+		//$Timer->ShowTime();
+
 		return [$Request, '<p>Hello World</p>'];
 		//var_dump($Request->SESSION);
 
@@ -147,7 +176,7 @@ class Hello{
 			var_dump($Form->FILTERED_DATA);
 			echo 'Form Not Valid';
 		}
-		
+
 		$Timer->End();
 		$Timer->ShowTime();
 

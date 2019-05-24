@@ -12,7 +12,7 @@ class AppConfigsEngine extends ConfigsCheckerEngine{
 			'ENGINE_NAME' ,
 			'CURRENT_ENV',
 			'DEBUG',
-			'URL',
+			'DOMAIN',
 			'TIMEZONE',
 			'MAIN_LANGUAGE',
 			'BACKUP_LANGUAGES',

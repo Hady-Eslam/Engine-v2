@@ -10,5 +10,6 @@ function Login_Begin($Request){
 	$Request->SESSION['Name'] = 'Hello Hady';
 	//return '<strong>Hello World</strong>';
 	//return [$Request, '<strong>Hello World</strong>'];
+	return '<p>Hello</p>';
 	return SiteRenderEngine::Login_Render($Request);
 }

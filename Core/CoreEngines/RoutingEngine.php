@@ -7,15 +7,15 @@ class RoutingEngine{
 
 	private $Schema;
 
-	function __construct($SCHEMA, $Page_404, $Page_401, $URL){
+	function __construct($SCHEMA, $Page_404, $Page_403, $URL){
 		$this->URL = $URL;
 		$this->Page_404 = [
 			'Type' => 'Static',
 			'Value' => '<static>'.$Page_404
 		];
-		$this->Page_401 = [
+		$this->Page_403 = [
 			'Type' => 'Static',
-			'Value' => '<static>'.$Page_401
+			'Value' => '<static>'.$Page_403
 		];
 		$this->Schema = include_once $SCHEMA;
 		$this->Values = [];
@@ -45,8 +45,8 @@ class RoutingEngine{
 				if ( $Key === '404' )
 					$this->Put404Page($Value);
 
-				else if ( $Key === '401' )
-					$this->Put401Page($Value);
+				else if ( $Key === '403' )
+					$this->Put403Page($Value);
 
 				// Check BOOLEAN
 				else if ( $Key === '<boolean>' ){
@@ -208,14 +208,14 @@ class RoutingEngine{
 			];
 	}
 
-	private function Put401Page($Value){
+	private function Put403Page($Value){
 		if ( strtolower( array_slice(explode('.', $Value), -1)[0] ) === 'html' )
-			$this->Page_401 = [
+			$this->Page_403 = [
 				'Type' => 'Static',
 				'Value' => $Value
 			];
 		else
-			$this->Page_401 = [
+			$this->Page_403 = [
 				'Type' => 'Render',
 				'Value' => $Value
 			];
@@ -230,7 +230,7 @@ class RoutingEngine{
 			return [
 				'Result' => 'NotFound',
 				'404' => $this->Page_404,
-				'401' => $this->Page_401,
+				'403' => $this->Page_403,
 				'Data' => [
 					'Path' => '',
 					'Values' => $this->Values
@@ -239,7 +239,7 @@ class RoutingEngine{
 		return [
 			'Result' => 'Found',
 			'404' => $this->Page_404,
-			'401' => $this->Page_401,
+			'403' => $this->Page_403,
 			'Data' => [
 				'Path' => $this->Result[1],
 				'Values' => $this->Values

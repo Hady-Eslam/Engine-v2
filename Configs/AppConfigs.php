@@ -2,13 +2,13 @@
 
 return [
 	
-	'ENGINE_NAME' => 'ENGINE',
+	'ENGINE_NAME' => 'ENGINE_FrameWork',
 	
 	'CURRENT_ENV' => 'Development',
 	
 	'DEBUG' => True,
 	
-	'URL' => 'engine.com',
+	'DOMAIN' => 'MM.com',
 	
 	'TIMEZONE' => 'UTC+02:00',
 	

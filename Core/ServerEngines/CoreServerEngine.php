@@ -23,12 +23,12 @@ class CoreServerEngine{
 			echo "Type 'ServerEngine <subcommand>' To Server.\n\n";
 			exit();
 		}
-		else if ( strtoupper($argv[1]) !== 'MAKEMIGRATIONS' ){
+		else if ( strtoupper($argv[1]) === 'MAKEMIGRATIONS' )
+			$this->Command = 'MakeMigrations';
+		else{
 			echo "UnDefiened Command\n\n";
 			exit();
 		}
-
-		$this->Command = 'MakeMigrations';
 	}
 	
 	function ExcuteCommand(){
@@ -38,7 +38,10 @@ class CoreServerEngine{
 	
 	private function MigrationsServer(){
 		$CoreMigrationsServer = new CoreMigrationsEngine();
-		$CoreMigrationsServer->CheckDataBaseConnection();
-		$CoreMigrationsServer->CreateSessionsModel();
+		$CoreMigrationsServer->ScanningModels();
+		$CoreMigrationsServer->DeleteUneccessary();
+		$CoreMigrationsServer->SaveModels();
+		$CoreMigrationsServer->PutFrameWorkModels();
+		$CoreMigrationsServer->MakeMigrations();
 	}
 }

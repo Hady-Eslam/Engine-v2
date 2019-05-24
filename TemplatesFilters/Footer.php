@@ -1,5 +1,6 @@
 <?php
 
-function Footer($Value1, $Value2){
-	var_dump($Value1);
+function Footer(){
+	return '<< Hello >>';
+	return 'Helllo World';
 }

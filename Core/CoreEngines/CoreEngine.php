@@ -19,6 +19,7 @@ use Core\ViewsEngine;
 use Core\TemplateEngine;
 
 use CoreModels\ModelExcutionEngine;
+use CoreModels\QueriesRegisterEngine;
 
 use Exceptions\CSRFExceptionsEngine;
 
@@ -31,6 +32,7 @@ class CoreEngine{
 	}
 
 	private function LoadConfigs(){
+
 		$GLOBALS['_Configs_']['_AppConfigs_'] =
 				new AppConfigsEngine(_DIR_.'/Configs/AppConfigs.php');
 		
@@ -42,6 +44,15 @@ class CoreEngine{
 
 		$GLOBALS['_Configs_']['_SessionConfigs_'] = 
 				new SessionConfigsEngine(_DIR_.'/Configs/SessionConfigs.php');
+
+		if ( file_exists(_DIR_.'/Storage/Models/RegisteredModels') ){
+			$GLOBALS['_Configs_']['_Models_'] = json_decode(
+				file_get_contents(_DIR_.'/Storage/Models/RegisteredModels'),
+				True
+			);
+		}
+		else
+			$GLOBALS['_Configs_']['_Models_'] = [];
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +65,7 @@ class CoreEngine{
 
 			$GLOBALS['_Configs_']['_AppConfigs_']['SCHEMA'],
 			_DIR_.'/Core/CorePages/404.html',
-			_DIR_.'/Core/CorePages/401.html',
+			_DIR_.'/Core/CorePages/403.html',
 			explode('/',    explode('?', $_SERVER['REQUEST_URI'], 2)[0],    2)[1]
 		
 		))->GetResult();
@@ -68,6 +79,11 @@ class CoreEngine{
 
 	function MakeDataBaseConnection(){
 		$GLOBALS['PDO'] = ModelExcutionEngine::Get_PDO($GLOBALS['_Configs_']['_ModelConfigs_']);
+
+		if ( $GLOBALS['PDO'] !== NULL )
+			$GLOBALS['_Configs_']['_Queries_'] = new QueriesRegisterEngine($GLOBALS['PDO']);
+		else
+			$GLOBALS['_Configs_']['_Queries_'] = new QueriesRegisterEngine();
 	}
 
 
@@ -168,6 +184,10 @@ class CoreEngine{
 		else
 			SessionFileTypeEngine::SaveSession($this->Render, $this->GET_CSRF);
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	function FlushOutPut(){
 		$this->Template->FlushTemplate($this->Generated_Template);

@@ -14,20 +14,22 @@ class LazyLoaderEngine{
 
 	static function AutoLoader($Name){
 		$Name = explode('\\', $Name);
-		
-		
+
 		if ( $Name[0] == 'Server' )
 			require_once _DIR_.'/Core/ServerEngines/'.$Name[1].'.php';
-		
+
+		else if ( $Name[0] == 'ModelQueriesOperations' )
+			self::ModelQueriesOperations($Name);
+
 		else if ( $Name[0] == 'Core' )
 			require_once _DIR_.'/Core/CoreEngines/'.$Name[1].'.php';
 
 		else if ( $Name[0] == 'Configs' )
 			require_once _DIR_.'/Core/ConfigsEngines/'.$Name[1].'.php';
-		
+
 		else if ( $Name[0] == 'ErrorsHandlers' )
 			require_once _DIR_.'/Core/ErrorsHandlersEngines/'.$Name[1].'.php';
-		
+
 		else if ( $Name[0] == 'Exceptions' )
 			require_once _DIR_.'/Core/ExceptionsEngines/'.$Name[1].'.php';
 
@@ -43,7 +45,7 @@ class LazyLoaderEngine{
 		else if ( $Name[0] == 'WhereOperations' )
 			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesEngines/WhereOperationsEngines/'
 					.$Name[1].'.php';
-		
+
 		else if ( $Name[0] == 'MainQueries')
 			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesEngines/MainQueriesEngines/'
 					.$Name[1].'.php';
@@ -72,9 +74,9 @@ class LazyLoaderEngine{
 	}
 
 	private static function ModelFields($Name){
-		if ( $Name[1] == 'AnotherTypes' )
+		if ( $Name[1] == 'RelationsTypes' )
 			require_once _DIR_.'/Core/ModelsEngines/ModelFieldsEngines/'
-					.'AnotherTypesEngines/'.$Name[2].'.php';
+					.'RelationsTypesEngines/'.$Name[2].'.php';
 
 		else if ( $Name[1] == 'IntegerTypes' )
 			require_once _DIR_.'/Core/ModelsEngines/ModelFieldsEngines/'
@@ -92,12 +94,16 @@ class LazyLoaderEngine{
 			require_once _DIR_.'/Core/ModelsEngines/ModelFieldsEngines/'
 					.'StringTypesEngines/'.$Name[2].'.php';
 
+		else if ( $Name[1] == 'SelectTypes' )
+			require_once _DIR_.'/Core/ModelsEngines/ModelFieldsEngines/'
+					.'SelectTypesEngines/'.$Name[2].'.php';
+
 		else
 			require_once _DIR_.'/Core/ModelsEngines/ModelFieldsEngines/'.$Name[1].'.php';
 	}
 
 	private static function FormsFields($Name){
-		
+
 		if ( $Name[1] == 'IntegerTypes' )
 			require_once _DIR_.'/Core/FormsEngines/FormsFieldsEngines/IntegerTypes/'
 					.$Name[2].'.php';
@@ -124,6 +130,21 @@ class LazyLoaderEngine{
 
 		else
 			require_once _DIR_.'/Core/FormsEngines/FormsFieldsEngines/'.$Name[1].'.php';
+	}
+
+	private static function ModelQueriesOperations($Name){
+
+		if ( $Name[1] == 'InsertOperations' )
+			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesOperationsEngines/InsertOperationsEngines/'.$Name[2].'.php';
+
+		else if ( $Name[1] == 'DeleteOperations' )
+			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesOperationsEngines/DeleteOperationsEngines/'.$Name[2].'.php';
+
+		else if ( $Name[1] == 'UpdateOperations' )
+			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesOperationsEngines/UpdateOperationsEngines/'.$Name[2].'.php';
+
+		else if ( $Name[1] == 'SelectOperations' )
+			require_once _DIR_.'/Core/ModelsEngines/ModelQueriesOperationsEngines/SelectOperationsEngines/'.$Name[2].'.php';
 	}
 
 	private static function CheckRegistered($Name){

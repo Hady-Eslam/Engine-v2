@@ -1,6 +1,5 @@
 <?php
 
-
 use Core\CoreEngine;
 use Core\TimerEngine;
 
@@ -24,4 +23,5 @@ $Core->SaveSession();
 $Core->FlushOutPut();
 
 $Timer->End();
+$GLOBALS['DataBase']->ShowTime();
 $Timer->ShowTime();
