@@ -56,9 +56,13 @@ class CoreMigrationsEngine{
 
 	private function ScanRegisteredModels(){
 
-		if ( file_exists( _DIR_.'/Storage/Models/RegisteredModels' ) )
+		if ( file_exists( _DIR_.'/Storage/Models/RegisteredModels' ) ){
 			$this->RegisteredModels = json_decode(
 		 			file_get_contents(_DIR_.'/Storage/Models/RegisteredModels'), True );
+			
+			if ( $this->RegisteredModels === NULL )
+				$this->RegisteredModels = [];
+		}
 		else{
 			$this->RegisteredModels = [];
 			$File_Handle = fopen(_DIR_.'/Storage/Models/RegisteredModels', 'w') or die(
