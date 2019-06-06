@@ -7,6 +7,7 @@ use SessionEngines\SessionDataBaseTypeEngine;
 class RedirectEngine{
 
 	static function To($URL, Request $Request = NULL){
+		$GLOBALS['_Configs_']['_Queries_']->InvokeAllQueries();
 		if ( $Request !== NULL )
 			self::SaveSession($Request);
 		header('Location:'.$URL);

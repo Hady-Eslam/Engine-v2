@@ -1,0 +1,25 @@
+<div class="container" style="min-height: 150px;">
+	
+	<< if SESSION != "true" >>
+	
+		<div class="row">
+			<a href="<< Header.SignUP >>" class="col-lg-1 offset-lg-2 align-middle h-50">Sign UP</a>
+			<a href="<< Header.Login >>" class="col-lg-1 offset-lg-2 align-middle h-50">Log in</a>
+		</div>
+
+	<< else >>
+		<div class="row">
+			<a href="<< Header.ShowNotes >>" class="col-lg-1 offset-lg-2 align-middle h-50">
+				Show Notes</a>
+			<a href="<< Header.MakeNote >>" class="col-lg-1 offset-lg-2 align-middle h-50">
+				Make Note</a>
+			<a href="<< Header.MyProfile >>" class="col-lg-1 offset-lg-2 align-middle h-50">
+				My Profile</a>
+			<a href="<< Header.Settings >>" class="col-lg-1 offset-lg-2 align-middle h-50">
+				Settings</a>
+
+			<a href="<< Header.LogOut >>" class="col-lg-1 offset-lg-2 align-middle h-50">
+				LogOut</a>
+		</div>
+	<< endif >>
+</div>

@@ -6,8 +6,6 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ Engine.php [L]
-
-	RewriteCond %{HTTP_HOST} ^engine.com$ 
 	RewriteRule ^(/)?$ Engine.php [L]
 	
 </IfModule>

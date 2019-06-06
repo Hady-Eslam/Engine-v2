@@ -16,7 +16,7 @@ class DateTimeFieldEngine extends FieldEngine{
 		'Default' => -1,
 		'Unique' => False,
 		'Primary_Key' => False,
-		'Null' => True
+		'Null' => True,
 		'Auto_Fill' => False
 	];
 

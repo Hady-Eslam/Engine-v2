@@ -115,22 +115,6 @@ class SessionDataBaseTypeEngine extends SessionEngine{
 	}
 
 	static function SaveRedirectSession($Request){
-		
-		if ( $CSRF_TOKEN !== NULL ){
-
-			if ( !isset($Request->SESSION['CSRF']) ){
-				$Request->SESSION['CSRF'] = [
-					$CSRF_TOKEN => True
-				];
-			}
-			else{
-				$CSRF = $Request->SESSION['CSRF'];
-				$CSRF[$CSRF_TOKEN] = True;
-				if ( sizeof($CSRF) > 30 )
-					array_shift($CSRF);
-				$Request->SESSION['CSRF'] = $CSRF;
-			}
-		}
 
 		if ( $Request->SESSION->isEmpty() )
 			setcookie('ENGINE_SESS_ID', '', time()-3600, '/');

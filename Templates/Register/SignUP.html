@@ -1,109 +1,69 @@
-<!DOCTYPE >
+<!DOCTYPE>
 <html>
 <head>
-	
 	<title>Sign UP</title>
 
-    <link rel="stylesheet" type="text/css" href="<< PagesCSS >>SignUP.CSS">
-    <link rel="stylesheet" type="text/css" href="<< AllPagesCSS >>">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	<link rel="icon" type="image/JPG" href="<< LOGO >>">
+	<link rel="icon" href="<< Head.LOGO >>">
 
-    <script src="<< JQueryScript >>"></script>
-    <script src="<< DropBoxScript >>"></script>
-
-    <script src="<< CheckLenScript >>"></script>
-    <script src="<< CheckinputLenScript >>"></script>
-
-    <script src="<< CheckPasswordScript >>"></script>
-    <script src="<< CheckPatternScript >>"></script>
-
-    <script src="<< CheckPhoneScript >>"></script>
-
-    <script src="<< TriggerMessageScript >>"></script>
-    <script src="<< SetError_FunctionScript >>"></script>
-
-    <script src="<< PagesScripts >>SignUPScript.js"></script>
 </head>
-
 <body>
 
-    << include : Header/Header.html >>
+	<< include : Header/MainHeader >>
 
-	<section>
+	<div class="container">
 
-        <div class="Title">
-            Sign UP Form
-        </div>
+		<div class="row justify-content-center">
 
-        <p id="Success"></p>
+			<form class="col-lg-6 col-sm-12 col-md-8" method="POST" action="<< Header.SignUP >>">
 
-		<form id='SignForm' method="post" enctype="multipart/form-data"
-            action="<< SignUP >>">
+				<< CSRF >>
 
-            << include : MessageBox.html >>
+				<div class="form-group">
+					<label for="Name">
+						Enter Your Name <input type="text" name="Name"
+							value="<< POST.Name >>">
+					</label>
+					<< if Errors.Name != "" >>
+						<< Errors.Name >>
+					<< endif >>
+				</div>
 
-            <div>
-    			
-                <div>
-                    <input oninput="CheckinputLen(this.id, Name_Len);" type="text" id='Name'
-                    name="Name" required placeholder="Enter Your Name"
-                    value="<< Name >>">
-    			</div>
+				<div class="form-group">
+					<label for="Email">
+						Enter Your Email <input type="text" name="Email"
+							value="<< POST.Email >>">
+					</label>
+					<< if Errors.Email != "" >>
+						<< Errors.Email >>
+					<< endif >>
+				</div>
 
-    			<div>
-    				<input onchange="CheckEmail()" type="text" id='Email' name="Email"
-                    required placeholder="Enter Your Email" value="<< Email >>">
-    			</div>
+				<div class="form-group">
+					<label for="Password">
+						Enter Your Password <input type="password" name="Password"
+							value="<< POST.Password >>">
+					</label>
+					<< if Errors.Password != "" >>
+						<< Errors.Password >>
+					<< endif >>
+				</div>
 
-                <div>
-                    <input id='Phone' type="text" placeholder="Enter Your Phone"
-                        oninput="CheckPhone()" name="Phone" required
-                        value="<< Phone >>">
-                </div>
+				<div class="form-group">
+					<label for="ConPassword">
+						Confirm Your Password <input type="password">
+					</label>
+				</div>
 
-                <div>
-                    <input id='Password' type="password" placeholder="Enter Your Password"
-                        required name="Password" oninput="CheckinputLen(this.id, Password_Len);">
+				<button class="btn btn-primary">Sign UP</button>
 
-                </div>
+			</form>
 
-                <div>
-                    <input id='ConPassword' type="password" placeholder="Re-Enter Password"
-                        required oninput="CheckinputLen(this.id, Password_Len);">
-                </div>
+		</div>
+	</div>
 
-                <div>
-                    <input type="checkbox" id="TemsOfUse" name="TemsOfUse"><span>Terms Of Use</span>
-                </div>
-            </div>
-            
-            <div>
-                <div>
-                    <input type="submit" value="Sign UP" id='FormSubmit'>
-                </div>
-            </div>
-		</form>
-
-	</section>
-
-    << include : Footer.html >>
-
-    <script type="text/javascript">
-
-        << Load : Register/SignUP_Result >>
-
-        << Filter : SignUP_Result : Result >>
-
-    </script>
-
-    <script type="text/javascript">
-        var CheckPage = '<< CheckPage >>';
-
-        var Name_Len = << Name_Len >>;
-        var Email_Len = << Email_Len >>;
-        var Phone_Len = << Phone_Len >>;
-        var Password_Len = << Password_Len >>;
-    </script>
 </body>
 </html>

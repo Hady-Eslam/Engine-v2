@@ -21,6 +21,8 @@ class CoreMigrationsEngine{
 	private function LoadConfigs(){
 		$GLOBALS['_Configs_']['_ModelConfigs_'] = 
 			new ModelConfigsEngine(_DIR_.'/Configs/ModelConfigs.php');
+
+		include_once _DIR_.'/Configs/UserConfigs.php';
 	}
 
 	private function SearchForModels(){
@@ -59,7 +61,6 @@ class CoreMigrationsEngine{
 		if ( file_exists( _DIR_.'/Storage/Models/RegisteredModels' ) ){
 			$this->RegisteredModels = json_decode(
 		 			file_get_contents(_DIR_.'/Storage/Models/RegisteredModels'), True );
-			
 			if ( $this->RegisteredModels === NULL )
 				$this->RegisteredModels = [];
 		}

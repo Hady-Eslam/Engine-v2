@@ -123,10 +123,10 @@ class TemplateEngine{
 				else if ( preg_match('/<< +Filter *: *([^ ]*) *: *(.*[^ ]) +>>/',
 						$Value, $Result ) )
 					$Template .= $this->ArgumentedFilter($Result);
-				else if ( preg_match('/<< +if +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+				else if ( preg_match('/<< +if +(.*[^ ]) *(==|>=|<=|>|<|!=) *(.*[^ ]) +>>/',
 						$Value, $Result) )
 					$Template .= $this->IF_Command($Result);
-				else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+				else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<|!=) *(.*[^ ]) +>>/',
 						$Value, $Result) )
 					throw new TemplateExceptionsEngine(
 						"Excepeted ( << if Variable Operator Value >> ) Found ( $Value )");
@@ -273,7 +273,8 @@ class TemplateEngine{
 			 $Operator === '>=' && $Value < $String ||
 			 $Operator === '<=' && $Value > $String ||
 			 $Operator === '>' && $Value < $String ||
-			 $Operator === '<' && $Value < $String ){
+			 $Operator === '<' && $Value < $String ||
+			 $Operator === '!=' && $Value == $String ){
 
 			$this->INSIDE_IF = true;
 			$this->MATCHED_IF = false;
@@ -374,7 +375,7 @@ class TemplateEngine{
 				$this->MATCHED_IF = true;
 				return ;
 			}
-			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<|!=) *(.*[^ ]) +>>/',
 					$String, $Result) )
 				return $this->IF_Command($Result);
 		}
@@ -399,7 +400,7 @@ class TemplateEngine{
 				$this->STORE = '';
 				return $Template;
 			}
-			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<) *(.*[^ ]) +>>/',
+			else if ( preg_match('/<< +elseif +(.*[^ ]) *(==|>=|<=|>|<|!=) *(.*[^ ]) +>>/',
 				$Value) )
 				$this->DO_NOT_STORE = true;
 			else if ( preg_match('/<< +else +>>/', $Value) )

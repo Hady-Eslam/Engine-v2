@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-	<title>Log in</title>
+	<title>Make Note</title>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
@@ -18,31 +18,31 @@
 
 		<div class="row justify-content-center">
 
-			<form class="col-lg-6 col-sm-12 col-md-8" method="POST" action="<< Header.Login >>">
+			<form class="col-lg-6 col-sm-12 col-md-8" method="POST"
+				action="<< Header.MakeNote >>">
 
 				<< CSRF >>
 
 				<div class="form-group">
-					<label for="Email">
-						Enter Your Email <input type="text" name="Email"
-							value="<< POST.Email >>">
+					<label for="Title">
+						Enter Your Note Title <input type="text" name="Title"
+							value="<< POST.Title >>">
 					</label>
-					<< if Errors.Email != "" >>
-						<< Errors.Email >>
+					<< if Errors.Title != "" >>
+						<< Errors.Title >>
 					<< endif >>
 				</div>
 
 				<div class="form-group">
 					<label for="Password">
-						Enter Your Password <input type="password" name="Password"
-							value="<< POST.Password >>">
+						<textarea name="Note"></textarea>
 					</label>
-					<< if Errors.Password != "" >>
-						<< Errors.Password >>
+					<< if Errors.Note != "" >>
+						<< Errors.Note >>
 					<< endif >>
 				</div>
 
-				<button class="btn btn-primary">Sign UP</button>
+				<button class="btn btn-primary">Save Note</button>
 
 			</form>
 

@@ -2,7 +2,6 @@
 
 use SiteEngines\SiteRenderEngine;
 
-
-function Begin(){
-	return (new SiteRenderEngine())->Not_Found_Page();
+function Begin($Request){
+	return SiteRenderEngine::Not_Found_Render($Request);
 }

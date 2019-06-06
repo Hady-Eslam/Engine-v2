@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-	<title>Success Sign UP</title>
+	<title>Note</title>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
@@ -14,8 +14,24 @@
 
 	<< include : Header/MainHeader >>
 
-	<div style="text-align: center;">
-		You Have Registered SuccessFully
+	<div class="container">
+
+		<div class="row justify-content-center">
+
+			<div style="display: block;" class="col-lg-12">
+				<p>Title : << Note.Title >> </p>
+				<p>Created At : << Note.Created_At >> </p>
+				<p>Updated At : << Note.Updated_At >> </p>
+			</div>
+
+			<div class="col-lg-12" style="border-color: #454545;border-style: solid;
+					border-width: 0.5px;">
+			</div>
+
+			<div style="display: block;" class="col-lg-12">
+				<< Note.Body >>
+			</div>
+		</div>
 	</div>
 
 </body>

@@ -59,6 +59,11 @@ class QueriesRegisterEngine{
 		return $this->Queries_Result[$Query_Number];
 	}
 
+	function InvokeAllQueries(){
+		$this->InvokeQueries();
+		$this->ExcuteQueries();
+	}
+
 	private function InvokeQueries(){
 
 		for ( $i = $this->Position ; $i < $this->QueriesNumber; $i++){

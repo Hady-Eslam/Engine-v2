@@ -2,13 +2,13 @@
 
 return [
 	
-	'ENGINE_NAME' => 'ENGINE_FrameWork',
+	'ENGINE_NAME' => 'ENGINE_FRAMEWORK',
 	
 	'CURRENT_ENV' => 'Development',
 	
 	'DEBUG' => True,
 	
-	'DOMAIN' => 'MM.com',
+	'DOMAIN' => 'EngineNote.com',
 	
 	'TIMEZONE' => 'UTC+02:00',
 	

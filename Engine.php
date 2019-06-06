@@ -18,10 +18,11 @@ $Core->MakeDataBaseConnection();
 $Core->CheckMiddleWares();
 $Core->GetRequest();
 $Core->BeginView();
+$Core->InvokeQueries();
 $Core->GenerateTemplate();
 $Core->SaveSession();
 $Core->FlushOutPut();
 
 $Timer->End();
-$GLOBALS['DataBase']->ShowTime();
+//$GLOBALS['DataBase']->ShowTime();
 $Timer->ShowTime();

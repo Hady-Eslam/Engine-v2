@@ -4,7 +4,7 @@ return [
 
     'TYPE' => 'DATABASE',	// Supported: DATABASE"
 
-    'LIFE_TIME' => 120,	// in Seconds
+    'LIFE_TIME' => 1 * 60 * 60,	// in Seconds
 
     'EXPIRE_ON_CLOSE' => False,	// Expire on Closing The Browser
 

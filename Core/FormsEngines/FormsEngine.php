@@ -51,8 +51,10 @@ abstract class FormsEngine extends FormsFieldsEngine{
 					$this->FILTERED_DATA[$FieldName] = $FieldValue->Value;
 			}
 		}
-		if ( $this->FormisValid !== NULL )
+		if ( $this->FormisValid !== True ){
+			$this->FormisValid = False;
 			return False;
+		}
 
 		$this->FormisValid = True;
 		return True;

@@ -8,7 +8,7 @@ return [
 	
 	'DB_HOST' => 'localhost',
 	
-	'DB_NAME' => 'EngineFrameWork',
+	'DB_NAME' => 'EngineNote',
 	
 	'DB_USER' => 'root',
 	
